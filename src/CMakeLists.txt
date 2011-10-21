@@ -1,7 +1,7 @@
-#file(GLOB headers *.h)
-#file(GLOB sources *.cpp)
+#FILE(GLOB headers *.h)
+#FILE(GLOB sources *.cpp)
 
-set(headers
+SET(headers
 Camera.h
 Coordinate2DHashTable.h
 FASTFeatureTracker.h
@@ -23,7 +23,7 @@ Projection.h
 Timer.h
 )
 
-set(sources
+SET(sources
 Camera.cpp
 Coordinate2DHashTable.cpp
 FASTFeatureTracker.cpp
@@ -38,4 +38,6 @@ Timer.cpp
 main.cpp
 )
 
-add_executable(test ${sources} ${headers})
+ADD_EXECUTABLE(test ${sources} ${headers})
+
+CUDA_ADD_EXECUTABLE(gpu_test ${sources} ${headers})

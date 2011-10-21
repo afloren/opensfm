@@ -1,5 +1,7 @@
-cmake_minimum_required (VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-project (OpenSFM)
+PROJECT(OpenSFM)
 
-add_subdirectory(src)
+FIND_PACKAGE(CUDA)
+
+ADD_SUBDIRECTORY(src)
