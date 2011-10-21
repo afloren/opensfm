@@ -1,0 +1,6 @@
+OpenSFM - an open source structure from motion library
+
+depends on:
+OpenCV - opencv.willowgarage.com/
+armadillo - arma.sourceforge.net/
+sba - http://www.ics.forth.gr/~lourakis/sba/
