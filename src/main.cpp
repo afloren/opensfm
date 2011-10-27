@@ -4,7 +4,7 @@
 #include <sba.h>
 #include <armadillo>
 
-#include "FASTFeatureTracker.h"
+#include "FeatureTracker.h"
 #include "Timer.h"
 #include "Map.h"
 #include "Frame.h"
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	cv::VideoCapture cap(0);
 
 	Map map;
-	FASTFeatureTracker ft;
+	FeatureTracker ft;
 	ft.K = arma::eye(3,3);
 	ft.Kinv = arma::inv(ft.K);
 
