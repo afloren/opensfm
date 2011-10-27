@@ -38,6 +38,6 @@ void ImagePatchExtractor::extract(cv::Mat image, std::vector<arma::vec2> locatio
 		//extract 11 by 11 patch around keypoint
 		std::vector<unsigned char> patch;
 		extract_patch<unsigned char>(image,locations[i],patch,11,0);
-		features.push_back(new ImagePatch(image,patch,locations[i]));
+		features.push_back(new ImagePatch(image,locations[i],patch));
 	}
 }

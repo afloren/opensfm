@@ -7,25 +7,11 @@
 
 class ImagePatch : public Feature
 {
-public:
-	ImagePatch()
-	{
+public:	
+	ImagePatch(cv::Mat image, arma::vec2 position, std::vector<unsigned char> patch);
+	~ImagePatch();
 
-	}
+	double distance(Feature *f);
 
-	ImagePatch(cv::Mat _image, std::vector<unsigned char> _patch, arma::vec2 _location)
-	{
-		image = _image;
-		patch = _patch;
-		location = _location;
-	}
-
-	~ImagePatch()
-	{
-
-	}
-
-	cv::Mat image;
 	std::vector<unsigned char> patch;
-	arma::vec2 location;
 };

@@ -1,10 +1,10 @@
 #pragma once
 
 #include <armadillo>
-#include "Feature.h"
 
 class Map;
 class Projection;
+class Feature;
 
 class Point
 {

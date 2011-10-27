@@ -1,10 +1,11 @@
 #include "Point.h"
+#include "Feature.h"
 
 using namespace arma;
 
 Point::Point(Map *_map, Feature *_feature)
 {
-	map = _map;
+	map = _map;	
 	feature = _feature;
 }
 

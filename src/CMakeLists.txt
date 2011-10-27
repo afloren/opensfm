@@ -40,4 +40,4 @@ main.cpp
 
 ADD_EXECUTABLE(test ${sources} ${headers})
 
-CUDA_ADD_EXECUTABLE(gpu_test ${sources} ${headers})
+CUDA_ADD_EXECUTABLE(gpu_test main.cu Timer.cpp Timer.h)
