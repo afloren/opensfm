@@ -1,13 +1,7 @@
 #include "FeatureTracker.h"
-#include "ImagePatch.h"
 #include "Frame.h"
 #include "Point.h"
 #include "Projection.h"
-
-#include "FASTFinder.h"
-#include "ImagePatchExtractor.h"
-#include "Radius2DHashMatcher.h"
-
 
 arma::vec2 normalize_projection(arma::mat33 Kinv, arma::vec2 projection)
 {
@@ -39,18 +33,22 @@ arma::Mat<T> cv2arma(cv::Mat_<T> m)
 	return r;
 }
 
-FeatureTracker::FeatureTracker()
+FeatureTracker::FeatureTracker(
+	FeatureFinder *_featureFinder, 
+	FeatureExtractor *_featureExtractor, 
+	FeatureMatcher *_featureMatcher,
+	arma::mat33 _K)
 {
-	featureFinder = new FASTFinder();
-	featureExtractor = new ImagePatchExtractor();
-	featureMatcher = new Radius2DHashMatcher();
+	featureFinder = _featureFinder;
+	featureExtractor = _featureExtractor;
+	featureMatcher = _featureMatcher;
+	K = _K;
+	Kinv = arma::inv(K);
 }
 
 FeatureTracker::~FeatureTracker()
 {
-	delete featureFinder;
-	delete featureExtractor;
-	delete featureMatcher;
+
 }
 
 void FeatureTracker::initialize(cv::Mat image, Map *map, double time)
@@ -62,7 +60,7 @@ void FeatureTracker::initialize(cv::Mat image, Map *map, double time)
 	featureExtractor->extract(image,locations,features);
 
 	Frame *frame = map->addFrame(image,time);
-	for(int i=0;i<features.size();i++)
+	for(unsigned int i=0;i<features.size();i++)
 	{		
 		Point *point = map->addPoint(features[i]);
 		frame->addProjection(normalize_projection(Kinv,locations[i]),point);
@@ -78,7 +76,7 @@ void FeatureTracker::update(cv::Mat image, Map *map, double time)
 	featureExtractor->extract(image,locations,features);
 
 	std::vector<Feature*> lastFeatures;
-	for(int i=0;i<map->frames.back()->points.size();i++)
+	for(unsigned int i=0;i<map->frames.back()->points.size();i++)
 	{
 		lastFeatures.push_back(map->frames.back()->points[i]->feature);
 	}
@@ -88,7 +86,7 @@ void FeatureTracker::update(cv::Mat image, Map *map, double time)
 
 	Frame *lastFrame = map->frames.back();
 	Frame *frame = map->addFrame(image,time);
-	for(int i=0;i<features.size();i++)
+	for(unsigned int i=0;i<features.size();i++)
 	{
 		if(matches[i] >= 0)
 		{

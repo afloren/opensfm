@@ -4,7 +4,7 @@
 #include "Camera.h"
 
 using namespace arma;
-
+/*
 vec project(vec a)
 {
 	vec b = a/a(a.size()-1);
@@ -587,3 +587,4 @@ bool estimate_five_point_pose(mat P1, mat P2,
 {
 
 }
+*/

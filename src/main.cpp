@@ -12,6 +12,10 @@
 #include "Point.h"
 #include "Projection.h"
 
+#include "FASTFinder.h"
+#include "ImagePatchExtractor.h"
+#include "Radius2DHashMatcher.h"
+
 #ifdef _DEBUG
 #pragma comment(lib, "opencv_core231d.lib")
 #pragma comment(lib, "opencv_highgui231d.lib")
@@ -29,9 +33,13 @@ int main(int argc, char *argv[])
 	cv::VideoCapture cap(0);
 
 	Map map;
-	FeatureTracker ft;
-	ft.K = arma::eye(3,3);
-	ft.Kinv = arma::inv(ft.K);
+
+	FASTFinder ff;
+	ImagePatchExtractor fe;
+	Radius2DHashMatcher fm;
+	arma::mat33 K = arma::eye(3,3);
+
+	FeatureTracker ft(&ff,&fe,&fm,K);	
 
 	Timer timer;
 	timer.start();
@@ -71,7 +79,7 @@ int main(int argc, char *argv[])
 
 		ft.update(bw1,&map,timer.getTotal());
 
-		for(int i=0;i<map.frames.back()->projections.size();i++)
+		for(unsigned int i=0;i<map.frames.back()->projections.size();i++)
 		{
 			Point *point = map.frames.back()->projections[i]->point;
 			if(point->projections.size() > 1)

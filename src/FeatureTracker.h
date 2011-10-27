@@ -9,7 +9,10 @@
 class FeatureTracker
 {
 public:
-	FeatureTracker();
+	FeatureTracker(FeatureFinder *featureFinder, 
+		FeatureExtractor *featureExtractor, 
+		FeatureMatcher *featureMatcher,
+		arma::mat33 K);
 	~FeatureTracker();
 
 	void initialize(cv::Mat image, Map *map, double time);
